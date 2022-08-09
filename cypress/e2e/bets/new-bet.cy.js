@@ -16,8 +16,14 @@ describe('Make a new bet', () => {
       cy.get('[data-cy="numberCartItens"]').should('exist');
     });
 
-    it.only('should be possible to make a bet for each game', () => {
-
+    it.only('should be possible to make a bet for all existing games', () => {
+      cy.get('[data-cy="gameTypes"] > button')
+        .each((button) => {
+          cy.wrap(button).click();
+          cy.get('[data-cy="completeGame"]').click();
+          cy.get('[data-cy="addToCart"]').click();
+          cy.get('#addToCartToast').should('exist');
+        })
     })
 
     it('should be possible to delete a bet from the cart', () => {
