@@ -23,7 +23,7 @@ describe('Make a new bet', () => {
           cy.get('[data-cy="completeGame"]').click();
           cy.get('[data-cy="addToCart"]').click();
           cy.get('#addToCartToast').should('exist');
-        })
+        });
     })
 
     it('should be possible to delete a bet from the cart', () => {
