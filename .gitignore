@@ -1,4 +1,5 @@
 node_modules/**/*
+LAB_TGL_API
 npm-debug.*
 
 # macOS
