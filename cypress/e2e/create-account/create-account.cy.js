@@ -5,7 +5,7 @@ describe('Create a new account', () => {
   })
 
   it('should be possible to create a new account', () => {
-    const randownUser = String(new Date().getTime());
+    const randownUser = 'test'+String(new Date().getTime());
     const email = `${randownUser}@mail.com`;
     const pass = 'abc1234';
     cy.createAcc(randownUser, email, pass);
