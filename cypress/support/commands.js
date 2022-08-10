@@ -28,3 +28,39 @@ Cypress.Commands.add('changePass', (pass) => {
   cy.route('POST', `**/reset/**`).as('changePassword');
   cy.get('.sc-iBkjds').click();
 })
+
+Cypress.Commands.add('getGamesInfo', () => {
+  cy.request({
+    method: 'GET',
+    url: 'http://127.0.0.1:3333/cart_games',
+    Headers: {
+      'Accept': 'application/json'
+    }
+  })
+})
+
+Cypress.Commands.add('createRandomBet', () => {
+  cy.get('[data-cy="gameTypes"] > button')
+    .each((button, i, arr) => {
+      const amountBtn = arr.length;
+      const randomNumber = Math.round(Math.random() * amountBtn);
+      if(randomNumber === i){
+        cy.wrap(button).click();
+        cy.get('[data-cy="completeGame"]').click();
+        cy.get('[data-cy="addToCart"]').click();
+      }
+    });
+})
+
+Cypress.Commands.add('fillCart', () => {
+  cy.getGamesInfo().then(response => {
+    Cypress.env('minCartValue' ,response.body.min_cart_value);
+  });
+  cy.createRandomBet();
+  cy.get('[data-cy="totalCart"]').then(total => {
+    const cartTotal = parseFloat(total.text().replace(',', '.'));
+    if(cartTotal < Cypress.env('minCartValue')){
+      cy.fillCart();
+    }
+  })
+})
