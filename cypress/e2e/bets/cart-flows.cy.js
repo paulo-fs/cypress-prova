@@ -52,7 +52,7 @@ describe('Testint actions on cart', () => {
       cy.get('#saveCartError').should('exist');
     });
 
-    it.only('should be possible save the cart', () => {
+    it('should be possible save the cart', () => {
       cy.fillCart();
       cy.get('[data-cy="saveCart"]').click();
       cy.get('[data-cy="confirm"]').click();
