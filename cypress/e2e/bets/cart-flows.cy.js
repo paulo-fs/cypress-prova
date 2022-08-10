@@ -2,7 +2,6 @@ describe('Testint actions on cart', () => {
   beforeEach(() => {
     cy.visit('/');
     cy.login('paulo.fernando@luby.software', 'abc1234');
-    cy.wait('@login');
   });
 
   context('Adding/removing item to/from cart', () => {
@@ -56,6 +55,8 @@ describe('Testint actions on cart', () => {
     it.only('should be possible save the cart', () => {
       cy.fillCart();
       cy.get('[data-cy="saveCart"]').click();
+      cy.get('[data-cy="confirm"]').click();
+      cy.get('#saveBetToast').should('exist');
     });
   })
 })
