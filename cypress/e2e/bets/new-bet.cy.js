@@ -26,12 +26,6 @@ describe('Make a new bet', () => {
         });
     });
 
-    it('should be possible to delete a bet from the cart', () => {
-      cy.get('[data-cy="deleteBet"]').click();
-      cy.get('[data-cy="confirm"]').click();
-      cy.get('#deletBetToast').should('exist');
-    });
-
     it('should be possible clear a game', () => {
       cy.get('[data-cy="clearGame"]').click();
       cy.get('[data-cy="confirm"]').click();
