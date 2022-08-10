@@ -16,7 +16,7 @@ describe('Make a new bet', () => {
       cy.get('[data-cy="numberCartItens"]').should('exist');
     });
 
-    it.only('should be possible to make a bet for all existing games', () => {
+    it('should be possible to make a bet for all existing games', () => {
       cy.get('[data-cy="gameTypes"] > button')
         .each((button) => {
           cy.wrap(button).click();
@@ -24,7 +24,7 @@ describe('Make a new bet', () => {
           cy.get('[data-cy="addToCart"]').click();
           cy.get('#addToCartToast').should('exist');
         });
-    })
+    });
 
     it('should be possible to delete a bet from the cart', () => {
       cy.get('[data-cy="deleteBet"]').click();
@@ -47,7 +47,28 @@ describe('Make a new bet', () => {
       cy.get('[data-cy="addToCart"]').click();
       cy.get('#addToCartFail').should('exist');
     });
+  });
 
+  context('Interface confirmation tests', () => {
+    beforeEach(() => {
+      cy.get('[data-cy="completeGame"]').click();
+    });
+    
+    it('should show a modal to confirm action when click on clear game button', () => {
+      cy.get('[data-cy="clearGame"]').click();
+      cy.get('.ReactModal__Content').should('exist');
+    });
 
+    it('should show a success message when confirmed to clear game', () => {
+      cy.get('[data-cy="clearGame"]').click();
+      cy.get('[data-cy="confirm"]').click();
+      cy.get('#clearGameToast').should('exist');
+    });
+
+    it('should show a success message when add a bet in cart', () => {
+      cy.get('[data-cy="completeGame"]').click();
+      cy.get('[data-cy="addToCart"]').click();
+      cy.get('#addToCartToast').should('exist');
+    })
   })
 })

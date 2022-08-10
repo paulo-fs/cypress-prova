@@ -4,7 +4,7 @@ describe('Recover the password', () => {
     cy.get('.forgotPass').click();
   });
 
-  it.only('should be possibe to recover or change the password', () => {
+  it('should be possibe to recover or change the password', () => {
     const email = 'manoel@gmail.com';
     const newPassword = 'abc1234';
     cy.resetPass(email);
