@@ -4,6 +4,10 @@ Cypress.Commands.add('login', (email, pass) => {
   cy.server();
   cy.route('POST', '**/login').as('login');
   cy.get('.sc-iBkjds').click();
+  cy.wait('@login').then((xhr) => {
+    Cypress.env('userToken' ,xhr.response.body.token.token)
+   });
+  cy.interceptors();
 });
 
 Cypress.Commands.add('createAcc', (userName, email, pass) => {
@@ -62,5 +66,17 @@ Cypress.Commands.add('fillCart', () => {
     if(cartTotal < Cypress.env('minCartValue')){
       cy.fillCart();
     }
+  })
+})
+
+Cypress.Commands.add('interceptors', () => {
+  cy.intercept('POST', '**/bet/new-bet', (req) => {
+    req.headers.Authorization = 'Bearer ' + Cypress.env('userToken');
+    req.continue();
+  })
+
+  cy.intercept('GET', '**/bet/all-bets', (req) => {
+    req.headers.Authorization = 'Bearer ' + Cypress.env('userToken');
+    req.continue();
   })
 })
