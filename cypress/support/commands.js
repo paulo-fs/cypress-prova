@@ -78,5 +78,5 @@ Cypress.Commands.add('interceptors', () => {
   cy.intercept('GET', '**/bet/all-bets**', (req) => {
     req.headers.Authorization = 'Bearer ' + Cypress.env('userToken');
     req.continue();
-  })
+  });
 })
